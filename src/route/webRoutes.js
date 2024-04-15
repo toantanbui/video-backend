@@ -15,6 +15,13 @@ const webRoutes = (app) => {
     router.post('/api/create-video', userController.handleCreateVideo);
     router.get('/api/get-all-video', userController.handleGetAllVideo);
 
+    router.post('/api/update-one-video', userController.handleUpdateOneVideo);
+    router.post('/api/delete-one-video', userController.handleDeleteOneVideo);
+
+    router.post('/api/get-one-video-by-than-thoai', userController.handleGetOneVideoMythology);
+
+
+
 
 
 

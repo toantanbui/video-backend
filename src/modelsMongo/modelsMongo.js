@@ -18,6 +18,7 @@ const schema1 = new Schema({
     category: String,
     country: String,
     movieContent: String,
+    movieLink: String,
     time: Date,
 
 

@@ -59,11 +59,70 @@ let handleGetAllVideo = async (req, res) => {
     }
 }
 
+let handleUpdateOneVideo = async (req, res) => {
+    try {
+        let users = await userService.handleUpdateOneVideo(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleDeleteOneVideo = async (req, res) => {
+    try {
+        let users = await userService.handleDeleteOneVideo(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleGetOneVideoMythology = async (req, res) => {
+    try {
+        let users = await userService.handleGetOneVideoMythology(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+
 
 
 
 
 
 module.exports = {
-    handleCreateVideo, handleGetAllVideo
+    handleCreateVideo, handleGetAllVideo, handleUpdateOneVideo, handleDeleteOneVideo,
+    handleGetOneVideoMythology
 }

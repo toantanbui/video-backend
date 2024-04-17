@@ -8,8 +8,14 @@ const ObjectId = Schema.ObjectId;
 
 const schema1 = new Schema({
     // id: ObjectId,
-    movieName: String,
-    parameterName: String,
+    movieName: {
+        type: String,
+        index: true
+    },
+    parameterName: {
+        type: String,
+        index: true
+    },
     lastName: String,
     duration: String,
     releaseYear: String,
@@ -29,10 +35,20 @@ const schema1 = new Schema({
 
 
 }, { collection: 'object' },
-    { timestamps: true }
+    {
+        timestamps: true,
+        // autoIndex: false
+    }
 )
 
 const ListVideo = mongoose.model('ListVideo', schema1);
+
+
+schema1.index({ movieName: "text" });
+//schema1.createIndex({ movieName: 'text' });
+//schema1.createIndexes()
+//ListVideo.index({ movieName: 'text' });
+
 
 const schema2 = new Schema({
 
@@ -47,8 +63,8 @@ const schema2 = new Schema({
     { timestamps: true }
 )
 
-const User = mongoose.model('User', schema2);
+const Users = mongoose.model('Users', schema2);
 
 
 
-module.exports = { ListVideo, User }
+module.exports = { ListVideo, Users, schema1 }

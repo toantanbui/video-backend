@@ -16,4 +16,6 @@ const connect = mongoose.connect(link, {
         console.log('e', e)
     })
 
+// connect.runCommand({ text: "ListVideo", search: "movieName" })
+
 module.exports = { connect }

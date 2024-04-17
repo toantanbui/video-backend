@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 import { createJWT } from '../middleware/JWTAction';
-import modelsMongo from '../modelsMongo/modelsMongo';
+import modelsMongo, { ListVideo } from '../modelsMongo/modelsMongo';
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -332,9 +332,282 @@ let handleGetOneVideoMythology = (data) => {
     })
 }
 
+let handleGetOneVideoId = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.id
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
 
 
 
+            } else {
+                let users = await modelsMongo.ListVideo.find({
+                    _id: data.id
+
+                })
+
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+let handleGetOneVideoFamily = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.category
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.ListVideo.find({
+                    category: data.category
+
+                })
+
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleLoginUsers = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.password) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+
+            } else {
+
+                // let users = await db.Users.findOne({
+                //     where: {
+                //         email: data.email,
+                //         password: data.password,
+
+                //     }
+                // })
+
+                let users = await modelsMongo.Users.find({
+                    email: data.email,
+                    password: data.password,
+
+                })
+
+                console.log("gia trị dang nhap", users)
+
+
+                if (!_.isEmpty(users)) {
+                    let token = createJWT({
+                        email: data.email,
+                        password: data.password,
+
+                        expiresIn: '1h'
+                    });
+
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'successful login',
+                        data: users[0]._id,
+                        token1: token
+
+                    });
+                }
+                else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Wrong account or password, the account has not been confirmed',
+
+                    });
+                }
+
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleSignup = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.password
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+
+
+                await modelsMongo.Users.create({
+                    email: data.email,
+                    password: data.password,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+
+
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'create success',
+
+                });
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleLogout = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            resolve({
+                errCode: 0,
+                errMessage: 'Successfully logged out'
+            })
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleGetVideoTextSearch = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.text
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                console.log('giá trị của text là: ', data.text)
+
+                // await modelsMongo.schema1.index({ parameterName: "text" });
+                const abc = await modelsMongo.schema1.index({ movieName: "text" })
+
+
+                let users = await modelsMongo.ListVideo.find({
+                    $text: { $search: data.text }
+                    // duration: data.text
+
+                })
+
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
 
 
 
@@ -342,5 +615,6 @@ let handleGetOneVideoMythology = (data) => {
 
 module.exports = {
     handleCreateVideo, handleGetAllVideo, handleUpdateOneVideo, handleDeleteOneVideo,
-    handleGetOneVideoMythology
+    handleGetOneVideoMythology, handleGetOneVideoId, handleGetOneVideoFamily,
+    handleLoginUsers, handleSignup, handleLogout, handleGetVideoTextSearch
 }

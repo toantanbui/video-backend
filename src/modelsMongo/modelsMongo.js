@@ -10,11 +10,15 @@ const schema1 = new Schema({
     // id: ObjectId,
     movieName: {
         type: String,
-        index: true
+
+        text: true
+
+
+
     },
     parameterName: {
         type: String,
-        index: true
+
     },
     lastName: String,
     duration: String,
@@ -37,17 +41,40 @@ const schema1 = new Schema({
 }, { collection: 'object' },
     {
         timestamps: true,
-        // autoIndex: false
+
     }
 )
 
 const ListVideo = mongoose.model('ListVideo', schema1);
 
+//const abc = schema1.index({ text: true })
 
-schema1.index({ movieName: "text" });
-//schema1.createIndex({ movieName: 'text' });
-//schema1.createIndexes()
-//ListVideo.index({ movieName: 'text' });
+
+const abc = schema1.path('movieName').index({ text: true });
+console.log('gia trị abc', abc)
+
+ListVideo.createIndexes();
+
+
+
+
+// const abc = ListVideo.ensureIndexes(
+//     { movieName: "text" }
+// )
+
+//     ;
+// const aa = ListVideo.listIndexes()
+//     .then((data) => {
+//         console.log('danh index la', data)
+
+
+//     })
+
+
+
+
+
+
 
 
 const schema2 = new Schema({

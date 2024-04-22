@@ -571,8 +571,15 @@ let handleGetVideoTextSearch = (data) => {
                 console.log('giá trị của text là: ', data.text)
 
                 // await modelsMongo.schema1.index({ parameterName: "text" });
-                const abc = await modelsMongo.schema1.index({ movieName: "text" })
 
+                // let bb = await modelsMongo.ListVideo.createIndexes([
+                //     { key: { movieName: "text" } }
+                // ])
+                // console.log('danh sách la', bb)
+
+
+                const aa = await modelsMongo.ListVideo.listIndexes()
+                console.log('danh sách la', aa)
 
                 let users = await modelsMongo.ListVideo.find({
                     $text: { $search: data.text }

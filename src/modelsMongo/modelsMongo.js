@@ -38,7 +38,7 @@ const schema1 = new Schema({
 
 
 
-}, { collection: 'object' },
+}, { collection: 'object1' },
     {
         timestamps: true,
 
@@ -90,7 +90,7 @@ const schema2 = new Schema({
     { timestamps: true }
 )
 
-const Users = mongoose.model('Users', schema2);
+const Users = mongoose.model('UserABC', schema2);
 
 
 

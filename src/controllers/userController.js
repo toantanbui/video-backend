@@ -229,7 +229,43 @@ let handleGetVideoTextSearch = async (req, res) => {
     }
 }
 
+let handleGetAllVideoByTime = async (req, res) => {
+    try {
+        let users = await userService.handleGetAllVideoByTime();
 
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleGetVideoCategoryOrCountry = async (req, res) => {
+    try {
+        let users = await userService.handleGetVideoCategoryOrCountry(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
 
 
 
@@ -238,5 +274,6 @@ let handleGetVideoTextSearch = async (req, res) => {
 module.exports = {
     handleCreateVideo, handleGetAllVideo, handleUpdateOneVideo, handleDeleteOneVideo,
     handleGetOneVideoMythology, handleGetOneVideoId, handleGetOneVideoFamily, handleLoginUsers,
-    handleSignup, handleLogout, handleGetVideoTextSearch
+    handleSignup, handleLogout, handleGetVideoTextSearch, handleGetAllVideoByTime,
+    handleGetVideoCategoryOrCountry
 }

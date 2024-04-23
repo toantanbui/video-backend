@@ -139,6 +139,7 @@ let handleGetAllVideo = (data) => {
             } else {
                 let users = await modelsMongo.ListVideo.find({
                 })
+                    .limit(10)
 
                 console.log('gia trị cần tìm', users)
 
@@ -302,6 +303,7 @@ let handleGetOneVideoMythology = (data) => {
                     category: data.category
 
                 })
+                    .limit(8)
 
                 console.log('gia trị cần tìm', users)
 
@@ -401,6 +403,7 @@ let handleGetOneVideoFamily = (data) => {
                     category: data.category
 
                 })
+                    .limit(8)
 
                 console.log('gia trị cần tìm', users)
 
@@ -617,11 +620,142 @@ let handleGetVideoTextSearch = (data) => {
 }
 
 
+let handleGetAllVideoByTime = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (false
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.ListVideo.find({
+                })
+                    .sort({ time: -1 })
+                    .limit(10)
+
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+
+let handleGetVideoCategoryOrCountry = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.category && !data.country
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                if (data.category) {
+                    let users = await modelsMongo.ListVideo.find({
+                        category: data.category
+
+                    })
+                    console.log('gia trị cần tìm category', users)
+
+                    if (!_.isEmpty(users)) {
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'success',
+                            data: users
+                        })
+                    } else {
+                        resolve({
+                            errCode: 3,
+                            errMessage: 'Not found',
+
+                        })
+                    }
+                }
+
+                if (data.country) {
+                    let users = await modelsMongo.ListVideo.find({
+                        country: data.country
+
+                    })
+                    console.log('gia trị cần tìm country', users)
+
+
+                    if (!_.isEmpty(users)) {
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'success',
+                            data: users
+                        })
+                    } else {
+                        resolve({
+                            errCode: 3,
+                            errMessage: 'Not found',
+
+                        })
+                    }
+                }
+
+
+
+
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+
 
 
 
 module.exports = {
     handleCreateVideo, handleGetAllVideo, handleUpdateOneVideo, handleDeleteOneVideo,
     handleGetOneVideoMythology, handleGetOneVideoId, handleGetOneVideoFamily,
-    handleLoginUsers, handleSignup, handleLogout, handleGetVideoTextSearch
+    handleLoginUsers, handleSignup, handleLogout, handleGetVideoTextSearch,
+    handleGetAllVideoByTime, handleGetVideoCategoryOrCountry
 }

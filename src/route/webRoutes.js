@@ -21,12 +21,16 @@ const webRoutes = (app) => {
     router.post('/api/create-video', checkUserJWT, userController.handleCreateVideo);
     router.get('/api/get-all-video', userController.handleGetAllVideo);
 
+    router.get('/api/get-all-video-by-time', userController.handleGetAllVideoByTime);
+
     router.post('/api/update-one-video', checkUserJWT, userController.handleUpdateOneVideo);
     router.post('/api/delete-one-video', checkUserJWT, userController.handleDeleteOneVideo);
 
     router.post('/api/get-one-video-by-than-thoai', userController.handleGetOneVideoMythology);
     router.post('/api/get-one-video-by-gia-dinh', userController.handleGetOneVideoFamily);
     router.post('/api/get-one-video-by-id', userController.handleGetOneVideoId);
+
+    router.post('/api/get-video-by-category-or-country', userController.handleGetVideoCategoryOrCountry);
 
 
 
